@@ -96,7 +96,50 @@ validated concepts directly and optimize for profit.
 - Working expectation: **15–35%/yr if live tracks backtest**; need ~100 live trades
   (2–4 months) to compare WR/avg-win/avg-loss/frequency vs backtest distribution.
 
+### 2026-06-11 — Literature/online research sweep ("develop the best strategy possible")
+Findings, ranked by strength of evidence × implementability:
+1. **Time-series momentum at 1–4 week horizons** is the most-confirmed crypto anomaly:
+   Dobrynskaya (SSRN 3913263) — momentum up to 2–4 weeks, reversal beyond ~1 month;
+   confirmed by AUT TS/CS momentum study and others. Our 15m dip-buyer exploits the
+   short-horizon *reversal* side; the *momentum* side was untapped.
+2. **Donchian-ensemble trend following with vol-scaled sizing** on top-20 liquid
+   coins: Sharpe >1.5, +10.8%/yr alpha vs BTC (Zarattini/Pagani/Barbon, SSRN 5209907,
+   Concretum Group 2025).
+3. **Volatility targeting improves Sharpe** across asset classes (QuantPedia survey;
+   crypto momentum with vol filter ~1.2 vs ~1.0 Sharpe).
+4. **Funding-rate carry** is real (~8%/yr at 0.8% vol — BIS WP 1087, CMU Crypto Carry)
+   but requires the spot hedge we've already parked. Funding-as-signal: viable later.
+5. **NostalgiaForInfinity** (community favorite): hundreds of opaque conditions on 5m;
+   unauditable, contradicts our single-signal lesson. Config conventions only.
+Conclusion: build a 4h long-only Donchian-ensemble trend rider with ATR-scaled
+stakes as the decorrelated complement to MeanRevLong. Two-bot portfolio
+(reversal + momentum) IS the evidence-optimal design at this capital size.
+
+### 2026-06-11 — TrendDonchian (3 variants) ❌ DEAD END
+- Design: 4h long-only Donchian ensemble (7/14/28d highs), turtle exits + chandelier,
+  2x leverage, ATR-scaled stakes, evidence-based per SSRN 5209907.
+- v1 (no BTC gate): full +170.28% (1,473 trades, WR 26.1%) BUT 2022 -12.70% /
+  PF 0.87, OOS Sharpe 0.38 / PF 1.10, DD 48% at taker fees.
+- v2 (+BTC 4h regime gate): 2022 fixed (+3.22%) but full only +105.2% (Sharpe 0.32)
+  and OOS 2024-07→: +11.84% / **Sharpe 0.18 / PF 1.06** / DD 27.5%.
+- v3 (strict 3/3 ensemble entry, 10-day-low exit): full +106.88%; OOS +11.81% /
+  **Sharpe 0.19 / PF 1.08**. Identical OOS noise.
+- Verdict: FAIL G2 decisively (need Sharpe >0.8). Two structurally different
+  variants → same OOS result = concept-level failure in our framework, not tuning.
+  The literature edge comes from continuously-rebalanced rotational vol-scaled
+  portfolios; freqtrade's per-trade slot model can't express it. Do NOT revisit
+  with parameter tweaks; only with a true portfolio-rotation engine (not freqtrade).
+
+### 2026-06-11 — MeanRevLongOpt hyperopt polish (running)
+- Rationale: only remaining high-probability improvement = polish the proven edge.
+- Isolated sandbox copy (MeanRevLongOpt) so the artifact .json cannot touch the
+  live bot. CalmarHyperOptLoss, spaces buy+sell only (no roi/trailing/stoploss —
+  fewer overfit dimensions), train 2021-01→2024-06, 150 epochs.
+- Adoption rule: only if OOS 2024-07→ beats current MeanRevLong OOS
+  (+109.8% archived; Sharpe 1.82) on the same window re-run.
+
 ### Next
 - MeanRevLong dry-run observation ≥4 weeks; compare live distribution vs backtest.
-- Optional R&D queue (from `_archive/FUTURE_STRATEGIES.md`, in promise order):
-  funding arb WITH spot hedge, 4h multi-timeframe trend, squeeze hyperopt rescue.
+- TrendDonchian gauntlet → deploy as bot #2 if passing.
+- Later R&D queue: funding arb WITH spot hedge, funding-rate entry filter,
+  squeeze hyperopt rescue.
