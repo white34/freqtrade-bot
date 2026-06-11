@@ -130,13 +130,23 @@ stakes as the decorrelated complement to MeanRevLong. Two-bot portfolio
   portfolios; freqtrade's per-trade slot model can't express it. Do NOT revisit
   with parameter tweaks; only with a true portfolio-rotation engine (not freqtrade).
 
-### 2026-06-11 — MeanRevLongOpt hyperopt polish (running)
-- Rationale: only remaining high-probability improvement = polish the proven edge.
-- Isolated sandbox copy (MeanRevLongOpt) so the artifact .json cannot touch the
-  live bot. CalmarHyperOptLoss, spaces buy+sell only (no roi/trailing/stoploss —
-  fewer overfit dimensions), train 2021-01→2024-06, 150 epochs.
-- Adoption rule: only if OOS 2024-07→ beats current MeanRevLong OOS
-  (+109.8% archived; Sharpe 1.82) on the same window re-run.
+### 2026-06-11 — MeanRevLongOpt hyperopt polish ❌ REJECTED (overfit)
+- Isolated sandbox (MeanRevLongOpt), CalmarHyperOptLoss, spaces buy+sell only,
+  train 2021-01→2024-06, 150 epochs. Best epoch 29: rsi_buy 42, min_adx 29,
+  bb_mult 2.1, dca_dip -0.035, rsi_sell 71 → train +194.52%.
+- OOS head-to-head (20240701→2026-06-11, identical config):
+  | params | profit | WR | trades |
+  |---|---|---|---|
+  | hyperopt | +33.27% / CAGR 15.9% | 58.1% | 577 |
+  | **current live (rsi 32/adx 20)** | **+133.61% / CAGR 54.7%** | **68.3%** | 666 |
+- Verdict: textbook overfit — 4x worse OOS despite winning in-sample. Adoption
+  rule (OOS-must-improve) correctly rejected it. Current params stay. Sandbox
+  files deleted (rejected param JSONs on disk are a footgun — broken-JSON lesson).
+- Bonus datum: current params' OOS on refreshed data is +133.61% (archived run to
+  May was +109.8%) — the edge held up through the newest month of data.
+- Lesson recorded: hand-relaxed v9→v12 params have now beaten a fresh 150-epoch
+  hyperopt OOS. Do not re-run hyperopt on this strategy without a NEW degree of
+  freedom (different signal input, not the same 7 params).
 
 ### Next
 - MeanRevLong dry-run observation ≥4 weeks; compare live distribution vs backtest.
