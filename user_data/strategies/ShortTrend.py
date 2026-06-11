@@ -1,6 +1,12 @@
 # ============================================================
 #  ShortTrend — shorts retest with DELIBERATE stop sizing
 #
+#  *** VERDICT 2026-06-11: DEAD — DO NOT DEPLOY ***
+#  G8 backtest (2022 bear year, market -72.86%): -84.66%, DD 87.93%,
+#  3,502 trades, WR 51.7%, avg -0.34%/trade. Even with correct 4%-price
+#  stops in the ideal regime, trend-shorts bleed to chop+fees. Fourth
+#  and final shorts failure. See RESEARCH_LOG.md.
+#
 #  The old project's three shorts attempts all failed, but every one
 #  was designed under the wrong leverage model (METHODOLOGY.md §1).
 #  v11's "-5% price stop" was actually -1% price at 5x — no room for

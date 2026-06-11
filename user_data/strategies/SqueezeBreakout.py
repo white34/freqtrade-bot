@@ -1,6 +1,12 @@
 # ============================================================
 #  SqueezeBreakout — ported from archived PhDStrategy_v14_squeeze
 #
+#  *** VERDICT 2026-06-11: FAILED RE-VALIDATION — NOT DEPLOYED ***
+#  Re-run on refreshed data (2021→2026-06): +37.56% but profit factor
+#  1.05, DD 41.32%, 963 days underwater. The archived May-2026 result
+#  (+57.67%/DD 30%) did not reproduce. Fragile edge ≈ fee bleed.
+#  Candidate for hyperopt rescue later; not worth deploying as-is.
+#
 #  Signal: volatility-expansion breakout. BB width compresses to a
 #  multi-day low (squeeze), then price breaks above the upper band
 #  with volume + rising ADX → enter long. The opposite trade class

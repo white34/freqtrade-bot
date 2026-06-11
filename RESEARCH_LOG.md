@@ -47,4 +47,41 @@ streak: 42 days) but were indistinguishable from a dead bot without alerting.
   Desktop started — found running with 11 min uptime on 2026-06-11).
 - All 29 pairs re-verified TRADING on Binance USDT-M futures.
 - Futures OHLCV/funding/mark data refreshed to 2026-06-11 (15m/1h/4h, 40-day extension).
-- Next: user reviews METHODOLOGY.md → Candidate L (long mean-reversion, blind rebuild).
+
+### 2026-06-11 — Direction change (user)
+"Just do whatever's profitable, well enough" — no blind rebuilds; carry over the
+validated concepts directly and optimize for profit.
+
+### 2026-06-11 — MeanRevLong (v12 port) re-validation ✅ DEPLOYED
+- Hypothesis: archived v12 logic still passes on refreshed data 2021→2026-06.
+- Command: `backtesting --strategy MeanRevLong --timerange 20210101-`
+- Result: **+346.37% / Sharpe 1.89 / Calmar 11.10 / DD 30.06% / WR 63.2% /
+  1,673 trades / CAGR 31.68%**. Beats archived benchmark (+237.98%, Sharpe 1.21) —
+  May–June 2026 bull extension helped. DD 30.06% sits exactly at the G1 line
+  (archived run: 28.01%); accepted.
+- Verdict: PASS → deployed dry-run as the main bot (port 8080).
+
+### 2026-06-11 — SqueezeBreakout (v14 port) re-validation ❌ NOT DEPLOYED
+- Hypothesis: archived v14 (+57.67%/DD 30%) reproduces on refreshed data.
+- Command: `backtesting --strategy SqueezeBreakout --timerange 20210101-`
+- Result: **+37.56% / Sharpe 0.55 / profit factor 1.05 / DD 41.32% / 963 days
+  underwater (2022-03→2024-11) / 2,735 trades / 562 exit timeouts**.
+- Verdict: FAIL (G1 DD, and PF 1.05 ≈ fee bleed). The May-2026 positive result was
+  fragile. Possible future rescue via hyperopt (squeeze_pct, breakout_vol_mult,
+  min_adx); not worth bot #2 as-is.
+
+### 2026-06-11 — ShortTrend corrected-stops retest ❌ SHORTS DEAD (4th failure)
+- Hypothesis: old shorts failures were partly an artifact of accidentally-tight
+  stops (-1% price); correctly-sized stops (-4% price at 3x) might work in a bear.
+- Command: `backtesting --strategy ShortTrend --timerange 20220101-20230101` (G8)
+- Result: **-84.66% in 2022 while the market fell -72.86%.** DD 87.93%, 3,502
+  trades, WR 51.7%, avg -0.34%/trade. Worse than the old v11.
+- Verdict: FAIL, conclusively. Trend-following shorts over-fire in a bear regime
+  (the gate is open all year) and bleed to chop + fees regardless of stop size.
+  Shorts are DEAD on this universe — do not revisit without a fundamentally
+  different mechanic (not stop-size tweaks).
+
+### Next
+- MeanRevLong dry-run observation ≥4 weeks; compare live distribution vs backtest.
+- Optional R&D queue (from `_archive/FUTURE_STRATEGIES.md`, in promise order):
+  funding arb WITH spot hedge, 4h multi-timeframe trend, squeeze hyperopt rescue.
