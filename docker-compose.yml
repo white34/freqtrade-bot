@@ -1,0 +1,25 @@
+---
+# Strategy selection lives in user_data/config.json ("strategy" key, set per bot).
+# Deliberately NO --strategy CLI flag here: in the old project the compose flag
+# silently overrode config.json and caused a wrong-strategy run.
+services:
+  freqtrade:
+    image: freqtradeorg/freqtrade:stable
+    restart: unless-stopped
+    container_name: freqtrade
+    env_file:
+      - .env
+    volumes:
+      - "./user_data:/freqtrade/user_data"
+    ports:
+      - "127.0.0.1:8080:8080"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3.sqlite
+      --config /freqtrade/user_data/config.json

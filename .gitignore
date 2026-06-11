@@ -1,0 +1,21 @@
+# Old project — read-only reference, contains old secrets and 2GB+ artifacts
+_archive/
+
+# Secrets
+.env
+
+# Market data (hundreds of MB, re-downloadable)
+user_data/data/
+
+# Runtime artifacts
+user_data/logs/
+user_data/*.sqlite
+user_data/*.sqlite-shm
+user_data/*.sqlite-wal
+user_data/backtest_results/
+user_data/hyperopt_results/
+user_data/hyperopt.lock
+user_data/notebooks/.ipynb_checkpoints/
+
+__pycache__/
+*.pyc
