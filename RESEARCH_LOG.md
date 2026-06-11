@@ -81,6 +81,21 @@ validated concepts directly and optimize for profit.
   Shorts are DEAD on this universe — do not revisit without a fundamentally
   different mechanic (not stop-size tweaks).
 
+### 2026-06-11 — Reality checks on the +346% headline (user asked "is this realistic?")
+- **Live-window replay**: backtest of the exact old live period (20260512–20260524)
+  produced **3 trades** — identical count to live. Backtest: 3 ROI wins, +9.39 USDT.
+  Live: 2 ROI wins + 1 stop, -2.64 USDT. Entire gap = ONE trade (SOL) flipping from
+  ROI win to stop-out. Frequency matched perfectly; outcome diff is single-trade variance.
+- **Fee stress (G6)**: full 5.4y re-run at 0.04% taker (double the maker fee):
+  **+211.15% / CAGR 23.2% / Sharpe 1.44 / DD 32.4%**. Edge survives doubled fees —
+  not fee-fragile (contrast SqueezeBreakout PF 1.05).
+- Remaining honest discounts on the headline: backtest/dry-run fill optimism for
+  post-only mean-reversion entries (adverse selection unmodeled — biggest unknown),
+  survivor bias (best of ~14 variants on same history; mitigated by OOS>in-sample),
+  regime dependence (profit clusters in bull-dip windows; ~0 expected in chop/bear).
+- Working expectation: **15–35%/yr if live tracks backtest**; need ~100 live trades
+  (2–4 months) to compare WR/avg-win/avg-loss/frequency vs backtest distribution.
+
 ### Next
 - MeanRevLong dry-run observation ≥4 weeks; compare live distribution vs backtest.
 - Optional R&D queue (from `_archive/FUTURE_STRATEGIES.md`, in promise order):
