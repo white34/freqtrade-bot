@@ -14,11 +14,15 @@
 #  LEVERAGED stake ratios, NOT price moves):
 #    stoploss -0.07  = -1.4% price = -7% of stake ≈ -0.9% of wallet
 #                      (stake ≈ 12.5% of capital at 8 slots)
-#    ROI 0.10/0.05/0.025/0.012/0.005
-#                    = +2.0% / +1.0% / +0.5% / +0.24% / +0.1% price
+#    ROI 0.20/0.10/0.05/0.024/0.01
+#                    = +4.0% / +2.0% / +1.0% / +0.48% / +0.2% price
 #    trailing: arms at 0.18 (=3.6% price), trails 0.122 (=2.44% price)
 #  This is a tight-stop scalper by design — that IS the validated
 #  system. Do not "widen the stop to -35%" expecting old behavior.
+#
+#  Current benchmarks (2026-06-12, doubled-ROI ladder, data 2021→2026-06):
+#    Full: +448.87% / CAGR 36.8% / DD 18.6% / WR 56.8% / 1651 trades
+#    OOS 2024-07→: +145.67% / Sharpe 2.71 / PF 1.41 / DD 18.6%
 # ============================================================
 
 from datetime import datetime
@@ -43,12 +47,17 @@ class MeanRevLong(IStrategy):
     timeframe = "15m"
     can_short = False
 
+    # Doubled vs the v12 source ladder after the 2026-06-12 exit study:
+    # user observed live exits firing too early; doubling targets beat the
+    # original on BOTH full history (+448.9% vs +346.4%, DD 18.6% vs 30.1%)
+    # AND OOS (+145.7% / Sharpe 2.71 vs +133.6%). Removing ROI entirely was
+    # worse (+148.7%) — winners round-trip. See RESEARCH_LOG 2026-06-12.
     minimal_roi = {
-        "0":   0.10,
-        "60":  0.05,
-        "180": 0.025,
-        "480": 0.012,
-        "960": 0.005,
+        "0":   0.20,
+        "60":  0.10,
+        "180": 0.05,
+        "480": 0.024,
+        "960": 0.01,
     }
 
     stoploss = -0.07

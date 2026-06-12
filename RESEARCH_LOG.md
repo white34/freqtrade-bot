@@ -148,8 +148,36 @@ stakes as the decorrelated complement to MeanRevLong. Two-bot portfolio
   hyperopt OOS. Do not re-run hyperopt on this strategy without a NEW degree of
   freedom (different signal input, not the same 7 params).
 
+### 2026-06-12 — Exit study (user: "exits too early/too often") ✅ ADOPTED
+- Hypothesis: the v12 ROI ladder (+0.5–2% price targets) sells winners into the
+  bounce it predicted. Entry-loosening was NOT tested (twice-falsified).
+- A (ROI off): +148.70% / DD 31.1% / WR 49.5% — worse; winners round-trip.
+- B (ROI ×2 → 0.20/0.10/0.05/0.024/0.01 = +4/2/1/0.48/0.2% price):
+  | window | B | baseline |
+  |---|---|---|
+  | Full 2021→ | **+448.87% / CAGR 36.8% / DD 18.6%** | +346.37% / 31.7% / 30.1% |
+  | OOS 2024-07→ | **+145.67% / Sharpe 2.71 / PF 1.41** | +133.61% |
+  | Fee stress 0.04% | **+270.13% / CAGR 27.2%** | +211.15% |
+- B beats baseline on every gate, in- AND out-of-sample → adopted into
+  MeanRevLong; live bot restarted 2026-06-12 04:23 UTC with the new ladder
+  (verified in startup log). Sandbox files deleted. User's live observation
+  was correct and worth ~+100pp/5y and -11.5pp max drawdown.
+
+### 2026-06-12 — PanicRev1d (daily capitulation buyer) ❌ DEAD
+- Connors-style RSI(3)<25 + close>EMA200 + close<SMA10 on 1d, exit first strength,
+  2x leverage. Full 2021→: **-89.00%** / 814 trades / WR 49.0% / avg -1.73%.
+- Verdict: daily-bar "dips in uptrends" keep falling in crypto; the equities
+  reversal edge does not transfer at this horizon. Do not revisit on daily bars.
+- Note: this brackets the reversal edge by timeframe — it lives at 15m (validated),
+  not at 1d (dead). Same lesson shape as trend (works in papers' weekly rotation,
+  dead in per-trade 4h).
+
+### On other asset classes (user offered forex/stocks, 2026-06-12)
+Recommendation logged: stay crypto until ~10x capital. Freqtrade is crypto-only;
+FX/equities need a new stack (MT5/IBKR), have thinner retail-algo edges, fee/data
+overhead, and market hours. Crypto's documented inefficiencies are the edge at $2k.
+
 ### Next
-- MeanRevLong dry-run observation ≥4 weeks; compare live distribution vs backtest.
-- TrendDonchian gauntlet → deploy as bot #2 if passing.
-- Later R&D queue: funding arb WITH spot hedge, funding-rate entry filter,
-  squeeze hyperopt rescue.
+- MeanRevLong (doubled-ROI ladder) dry-run observation; compare live distribution
+  vs new backtest expectation (~57% WR, avg hold ~2.7h).
+- Later R&D queue: funding arb WITH spot hedge, funding-rate entry filter.
