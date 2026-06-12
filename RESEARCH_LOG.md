@@ -231,8 +231,26 @@ Bot is flat ~74% of days; signal-loosening twice-falsified, so tested coverage a
   (2) young listings (<1.5y) are toxic for 15m mean-reversion — exclude pairs
   younger than ~18 months at addition time.
 
+### 2026-06-12 — Monte Carlo + robustness analysis of the live system
+Bootstrap of the actual 39-pair OOS trade history (827 trades, 23.3mo; 10k sims;
+1/8-equity stakes), 1-year horizons:
+- **IID resample** (naive): median CAGR +78.7%, median maxDD 8.8%, P(DD>20%) 0.5%.
+- **Day-block resample** (honest — preserves crash-day clustering, 105 active
+  days/yr): median CAGR +79.3%, 5th pct +11.9%, 95th pct +189.2%;
+  **median maxDD 18.6%, 95th pct DD 30.8%, P(DD>20%)=39%, P(DD>30%)=5.9%,
+  P(losing year)=2.1%.**
+- Lesson: clustering ~doubles tail risk vs naive MC. Expect a 20%+ drawdown most
+  years and a 30%+ one every ~17 years-equivalent; a losing year is possible.
+  All conditional on the OOS-era edge persisting (regime risk unmodeled).
+- **Parameter jitter (OOS, baseline +188.4%/Sharpe 3.15):** rsi 30 → +135.8%/2.56;
+  rsi 34 → +64.7%/1.39; adx 17 → +148.2%/2.64; adx 23 → +204.5%/3.32. No collapse
+  anywhere = smooth hill, not knife-edge. Asymmetry consistent with history:
+  tightening preserves, loosening degrades. **adx 23's higher number is NOT to be
+  chased — that would be holdout-shopping; jitter is a probe, not tuning.**
+
 ### Next
 - MeanRevLong (doubled ROI, 39 pairs) dry-run observation; expectation: ~56% WR,
-  ~1.1 trades/day, avg hold ~3h.
+  ~1.1 trades/day, avg hold ~3h. MC says: don't panic below DD 20%; reassess
+  thesis only if live DD exceeds ~30% or a quarter is deeply negative.
 - Later R&D queue: funding arb WITH spot hedge, funding-rate entry filter.
 - Pair-list hygiene: monthly delisting check + young-listing rule (≥18mo).
