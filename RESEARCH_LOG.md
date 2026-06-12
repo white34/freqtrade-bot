@@ -248,9 +248,27 @@ Bootstrap of the actual 39-pair OOS trade history (827 trades, 23.3mo; 10k sims;
   tightening preserves, loosening degrades. **adx 23's higher number is NOT to be
   chased — that would be holdout-shopping; jitter is a probe, not tuning.**
 
+### 2026-06-12 — DeadZoneDip (user: "separate bot for the dead zones") ❌ DEAD
+- The cleanest experiment of the project: EXACT MeanRevLong logic (incl. per-pair
+  structure filters = relative-strength alts only), gate INVERTED — trades only
+  when BTC regime is OFF.
+- Full 2021→: **-78.71%** (2,081 trades, WR 46.9%). 2022: **-48.98%** / Sharpe
+  -3.54. OOS: **-45.35%**.
+- Same entries, same exits, same pairs: gate ON = +715%, gate OFF = -79%. The
+  regime gate isn't a filter, it's THE alpha switch. Even pairs above their own
+  EMA200 sink when BTC is weak (relative strength does not protect alt dips).
+- Dead-zone directional trading is now falsified 8 ways (4 shorts variants,
+  CrashBounce, GateB marginal trades, TrendDonchian v1's 2022, DeadZoneDip).
+  The ONLY surviving dead-zone earner remains delta-neutral funding carry
+  (spot hedge required — needs user spot account; R&D queue #1).
+- Incident note: py-written strategy file landed as cp1252 → freqtrade's resolver
+  crashed on ALL strategies until converted to UTF-8. Rule: always write strategy
+  files with explicit utf-8 (the Write/Edit tools do this; raw py open() does not).
+
 ### Next
 - MeanRevLong (doubled ROI, 39 pairs) dry-run observation; expectation: ~56% WR,
   ~1.1 trades/day, avg hold ~3h. MC says: don't panic below DD 20%; reassess
   thesis only if live DD exceeds ~30% or a quarter is deeply negative.
-- Later R&D queue: funding arb WITH spot hedge, funding-rate entry filter.
+- Later R&D queue: funding arb WITH spot hedge (the one true dead-zone earner),
+  funding-rate entry filter.
 - Pair-list hygiene: monthly delisting check + young-listing rule (≥18mo).
