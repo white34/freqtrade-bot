@@ -198,8 +198,41 @@ Bot is flat ~74% of days; signal-loosening twice-falsified, so tested coverage a
   BB-upper) and are meaningless without an open trade; entry scarcity is the real
   metric, addressed via universe size.
 
+### 2026-06-12 — CrashBounce (fundamentally different: event-driven, regime-free) ❌ DEAD
+- Entry: ≥5% drop/1h + 2.5x volume + RSI<25; no trend/regime gates. Fast bounce exits.
+- v1 (3x): full +840.5% / CAGR 51% and **+74.62% in 2022 (Sharpe 2.94)** — the only
+  strategy in project history to pass the bear-year acid test. BUT max account
+  underwater 79.5%, and **OOS 2024-07→: -66.64% / DD 79.7%**.
+- v2 (2x, same price levels, brutal chain-breakers): OOS **-50.11%** / DD 64.3%.
+- Verdict: DECAYED EDGE. Real in 2021-2023, gone since 2024 (liquidation-bounce got
+  arbitraged/front-run away as cascade data went mainstream). Risk tweaks cannot fix
+  a dead edge. Do not revisit without evidence the regime changed back.
+
+### 2026-06-12 — Universe expansion ✅ ADOPTED (29 → 39 pairs)
+- 67-pair (all adds): full +594.65% but OOS +94.38% / Sharpe 1.89 — diluted. ❌
+- 41-pair (top-12 adds by TODAY'S 24h volume — a-priori criterion, no OOS peeking):
+  OOS +182.11% / Sharpe 3.02 / 853 trades. Full +664.85% but TON+TAO = -316 USDT
+  on 36 trades (young-listing toxicity) → G5 trim.
+- **39-pair final** (29 + ZEC WLD 1000PEPE TRX CRV XLM CHZ FET DASH GALA):
+  | gate | 39-pair | 29-pair baseline |
+  |---|---|---|
+  | Full 2021→ | **+715.02% / CAGR 47.1% / Sharpe 2.05 / maxDD(acct) 21.45%** | +448.87% / 36.8% / 18.62% |
+  | OOS 2024-07→ | **+188.41% / CAGR 72.3% / Sharpe 3.15 / PF 1.37 / DD 21.43%** | +145.67% / 54.7% / 2.71 / 1.41 / 18.6% |
+  | Fee stress (41p proxy) | +377.15% | +270.13% |
+  | OOS trade count | 827 (+24% coverage) | 666 |
+- Metric note: console "Max % account underwater (balance)" (35.66%) includes open-
+  position marks; the gate metric used throughout is closed-equity max_drawdown_account.
+  DD window for both: 2025-01-17→26 (post-inauguration crash).
+- Honesty note: 41p was a second look at the holdout after 67p rejection; criterion
+  was a-priori (volume rank) and the win is dominant, but live tracking is the real
+  test. Adopted: config whitelist → 39 pairs, bot restarted 2026-06-12 05:34 UTC,
+  whitelist length 39 verified via API.
+- Lessons: (1) universe quality > universe size — curate by current liquidity;
+  (2) young listings (<1.5y) are toxic for 15m mean-reversion — exclude pairs
+  younger than ~18 months at addition time.
+
 ### Next
-- MeanRevLong (doubled-ROI ladder) dry-run observation; compare live distribution
-  vs new backtest expectation (~57% WR, avg hold ~2.7h).
-- Universe-expansion verdict (pending full + OOS on 67 pairs).
+- MeanRevLong (doubled ROI, 39 pairs) dry-run observation; expectation: ~56% WR,
+  ~1.1 trades/day, avg hold ~3h.
 - Later R&D queue: funding arb WITH spot hedge, funding-rate entry filter.
+- Pair-list hygiene: monthly delisting check + young-listing rule (≥18mo).
