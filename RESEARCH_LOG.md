@@ -177,7 +177,29 @@ Recommendation logged: stay crypto until ~10x capital. Freqtrade is crypto-only;
 FX/equities need a new stack (MT5/IBKR), have thinner retail-algo edges, fee/data
 overhead, and market hours. Crypto's documented inefficiencies are the edge at $2k.
 
+### 2026-06-12 — Coverage round (user: "always misses really good opportunities")
+Bot is flat ~74% of days; signal-loosening twice-falsified, so tested coverage axes:
+- **GateA** (drop ema50-slope from BTC regime): +420.76% / DD 18.6% / 1,661 trades —
+  worse than baseline on profit with no real coverage gain. ❌ REJECTED.
+- **GateB** (regime = BTC > 4h ema200 only): full +490.35% / DD 16.75% / 2,148
+  trades — dominated in-sample, BUT OOS: +124.98% / Sharpe 2.32 / PF 1.25 vs
+  baseline's +145.67% / 2.71 / 1.41. Loses OOS on every metric = the extra
+  trades were 2021-bull regime-fit. ❌ REJECTED by adoption rule. The strict
+  slope-confirmed gate IS load-bearing for OOS quality.
+- **MeanRev1h** (same logic on 1h): +11.07% / Sharpe 0.10 / 586 trades. ❌ DEAD.
+  Reversal edge now triple-bracketed by timeframe: 15m works, 1h noise, 1d death
+  (PanicRev1d -89%).
+- **Universe expansion 29→67 pairs** (same strict entry, more tickets): 38 verified
+  TRADING Binance perps added (TRX XLM VET HBAR ICP SAND MANA THETA EGLD CHZ GALA
+  ONE CRV COMP SNX SUSHI YFI 1INCH DYDX ENS KAVA ZEC DASH ANKR IOTA NEO QTUM ZRX
+  STORJ WLD TON 1000PEPE FET RENDER LDO STX TAO WIF; EOS delisted). Data
+  downloaded; results pending below.
+- Note for FreqUI readers: chart "exit signals" fire constantly by design (RSI>70 /
+  BB-upper) and are meaningless without an open trade; entry scarcity is the real
+  metric, addressed via universe size.
+
 ### Next
 - MeanRevLong (doubled-ROI ladder) dry-run observation; compare live distribution
   vs new backtest expectation (~57% WR, avg hold ~2.7h).
+- Universe-expansion verdict (pending full + OOS on 67 pairs).
 - Later R&D queue: funding arb WITH spot hedge, funding-rate entry filter.
