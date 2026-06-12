@@ -89,7 +89,7 @@
         "enable_openapi": false,
         "jwt_secret_key": "c3d5fcfd36a3a53ca71dac8319388bdd609fe3ba48aab503da3cbff6473c03e6",
         "ws_token": "NnmeVCPBr9iDJnv1UZ0cxZG2IltbGppV",
-        "CORS_origins": [],
+        "CORS_origins": ["http://127.0.0.1:8080", "http://localhost:8080"],
         "username": "freqtrader",
         "password": "NIrPfPJNsKjmpyxRjoDx"
     },
