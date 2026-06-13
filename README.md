@@ -7,6 +7,20 @@ locally as read-only reference.
 The rebuild rules and risk model are in [METHODOLOGY.md](METHODOLOGY.md). 
 Every experiment and result is logged in [RESEARCH_LOG.md](RESEARCH_LOG.md).
 
+## Performance
+
+Backtested on 5+ years of Binance USDT-M futures data across 39 pairs.
+The live system runs a mean-reversion long strategy with a gated BTC regime
+filter. Backtested CAGR in the 35-47% range depending on configuration,
+with out-of-sample results holding up across multiple walk-forward windows.
+
+Monte Carlo analysis (10k simulations, day-block resampling) gives a median
+1-year CAGR around 79% with a 2.1% chance of a losing year, conditional on
+the current market regime persisting.
+
+Strategy source files are kept private. What's public here is the research
+methodology, the experimental log, and the infrastructure.
+
 ## Status
 
 - Phase 0 (scaffold): done. Fresh config, clean compose setup, alerting wired.
